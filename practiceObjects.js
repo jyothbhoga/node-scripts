@@ -1,0 +1,98 @@
+// https://www.instagram.com/p/DNA7D3Ryk_m
+
+const employee = {
+  age: 31,
+  name: "Jyoth",
+  aadharNo: 123455678990,
+  mobileNo: 987654321,
+  city: "Mumbai",
+};
+
+const empProxy = new Proxy(employee, {
+  get(target, props) {
+    if (props === "aadharNo") {
+      console.log("Warning sensitive information");
+      return "xxxxxxxxxx890";
+    }
+    if (props === "mobileNo") {
+      console.log("Warning sensitive information");
+      return "xxxxxxx21";
+    }
+
+    return Reflect.get({ ...arguments });
+  },
+});
+
+console.log(empProxy.aadharNo);
+
+// https://www.instagram.com/p/DOoOUuRgR28
+
+const one = Symbol(2);
+const obj = {
+  ["one"]: 1,
+  [one]: 2,
+};
+
+console.log(obj.one);
+
+// https:www.instagram.com/p/DOjIRPHgZ7o/
+
+function greet(name = "guest") {
+  console.log(`Hello ${name}`);
+}
+
+greet();
+greet(null);
+greet(undefined);
+
+// https://www.instagram.com/p/DOIfjv1gR_h/
+const nums = [1, 2, 3];
+const x = nums.forEach((n) => n * 2);
+const y = nums.map((n) => n * 2);
+console.log(x);
+console.log(y);
+
+// https://www.instagram.com/p/DN_URbqAYel/
+
+const cart = [
+  { item: "Shoes", price: 200 },
+  { item: "T shirt", price: 400 },
+  { item: "Shirt", price: 700 },
+  { item: "Belt", price: 340 },
+];
+
+const totalamt = cart.reduce((acc, curr) => {
+  return (acc = acc + curr.price);
+}, 0);
+
+console.log(totalamt);
+
+// https://www.instagram.com/p/DNtThfdQhdR/
+const arr = [5, 23, 231, 132, 425];
+const sliced = arr.slice(1, 3);
+console.log(sliced);
+console.log(arr);
+
+const arr1 = [5, 23, 231, 132, 425];
+const spliced = arr1.splice(2, 2);
+console.log(spliced);
+console.log(arr1);
+
+// https://www.instagram.com/p/DNlbysEyUr6/
+let obj1 = {
+  name: "Jyoth",
+  age: undefined,
+  isStudent: true,
+  score: [213, undefined, 23],
+  add: {
+    city: "Mumbai",
+    pin: null,
+  },
+  greet: function () {
+    return "hello";
+  },
+};
+
+let strObj1 = JSON.stringify(obj1);
+
+console.log(strObj1);

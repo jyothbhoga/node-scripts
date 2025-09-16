@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const timestamp = Date.now() + 60 * 60 * 1000;
+const timestamp = Date.now() + 60 * 1000;
 
 const payload = {
   sub: "01961f0d-2f68-759e-9d05-5f67f87e0bdd",
