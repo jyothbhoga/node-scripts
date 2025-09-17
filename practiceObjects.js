@@ -186,4 +186,44 @@ function outer() {
 const greetMe = outer();
 greetMe();
 
+// Quanteon Solutions: Flatten Object
+const input = {
+	a: 1,
+	b: {
+		c: 2,
+		d: false
+	},
+	e: 4,
+	f: {
+		g: true,
+		h: {
+			i: '6'
+		}
+	},
+	j: 7
+};
+
+const output = {
+	a: 1,
+	c: 2,
+	d: false,
+	e: 4,
+	g: true,
+	i: '6',
+	j: 7
+};
+
+const flatObject = (obj) => {
+	let flattenedObj = {};
+	for(let elem in obj) {
+		if(typeof obj[elem] === 'object') {
+			flattenedObj = {...flattenedObj, ...flatObject(obj[elem])};
+		} else {
+			flattenedObj[elem] = obj[elem]
+		}
+	}
+	return flattenedObj
+}
+
+console.log(flatObject(input))
 
