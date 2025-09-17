@@ -19,11 +19,41 @@ const empProxy = new Proxy(employee, {
       return "xxxxxxx21";
     }
 
-    return Reflect.get({ ...arguments });
+    return Reflect.get(...arguments);
   },
 });
 
 console.log(empProxy.aadharNo);
+console.log(empProxy.mobileNo);
+
+// https://www.instagram.com/p/DND6fCiScBA/
+
+const employee1 = {
+  age: 31,
+  name: "Jyoth",
+  aadharNo: 123455678990,
+  mobileNo: 987654321,
+  city: "Mumbai",
+};
+
+const empProxy1 = new Proxy(employee1, {
+  set(obj, prop, value) {
+    if (prop in obj) {
+      return Reflect.set(obj, prop, value);
+    } else throw new Error("Cannot add new key");
+  },
+
+  get(obj, prop) {
+    if (prop in obj) {
+      return Reflect.get(...arguments);
+    } else {
+      throw new Error("Property does not exist");
+    }
+  },
+});
+
+// empProxy1.state = "Maharashtra";
+console.log(empProxy1.age);
 
 // https://www.instagram.com/p/DOoOUuRgR28
 
@@ -96,3 +126,64 @@ let obj1 = {
 let strObj1 = JSON.stringify(obj1);
 
 console.log(strObj1);
+
+// https://www.instagram.com/p/DJ_ykxYy30M/
+function add(a) {
+  return function (b) {
+    if (!b) return a;
+    return add(a + b);
+  };
+}
+
+const sum = add(1)(2)(3)(4);
+
+console.log(sum());
+
+// https://www.instagram.com/p/DIqx7EHy-He/
+let user = {
+  name: "Jyoth",
+  profession: "Engineer",
+};
+
+Object.defineProperty(user, "age", {
+  value: 31,
+  writable: true,
+  configurable: true,
+  enumerable: false,
+});
+
+user.age = 32;
+console.log(user.age);
+
+const userProxy = new Proxy(user, {
+  set(obj, prop, value) {
+    if (prop in obj) {
+      return Reflect.set(obj, prop, value);
+    } else throw new Error("cannot add properties");
+  },
+  get(target, prop) {
+    if (prop === "age") {
+      return 31;
+    }
+    return Reflect.get(...arguments);
+  },
+});
+userProxy.age = 23;
+// userProxy.add = "Mumbai";
+
+console.log(userProxy.age);
+
+const name = "Global";
+
+function outer() {
+  const name = "Outer";
+  function inner() {
+    console.log(name);
+  }
+  return inner;
+}
+
+const greetMe = outer();
+greetMe();
+
+
