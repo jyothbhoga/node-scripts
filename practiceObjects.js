@@ -188,42 +188,92 @@ greetMe();
 
 // Quanteon Solutions: Flatten Object
 const input = {
-	a: 1,
-	b: {
-		c: 2,
-		d: false
-	},
-	e: 4,
-	f: {
-		g: true,
-		h: {
-			i: '6'
-		}
-	},
-	j: 7
+  a: 1,
+  b: {
+    c: 2,
+    d: false,
+  },
+  e: 4,
+  f: {
+    g: true,
+    h: {
+      i: "6",
+    },
+  },
+  j: 7,
 };
 
 const output = {
-	a: 1,
-	c: 2,
-	d: false,
-	e: 4,
-	g: true,
-	i: '6',
-	j: 7
+  a: 1,
+  c: 2,
+  d: false,
+  e: 4,
+  g: true,
+  i: "6",
+  j: 7,
 };
 
 const flatObject = (obj) => {
-	let flattenedObj = {};
-	for(let elem in obj) {
-		if(typeof obj[elem] === 'object') {
-			flattenedObj = {...flattenedObj, ...flatObject(obj[elem])};
-		} else {
-			flattenedObj[elem] = obj[elem]
-		}
-	}
-	return flattenedObj
-}
+  let flattenedObj = {};
+  for (let elem in obj) {
+    if (typeof obj[elem] === "object") {
+      flattenedObj = { ...flattenedObj, ...flatObject(obj[elem]) };
+    } else {
+      flattenedObj[elem] = obj[elem];
+    }
+  }
+  return flattenedObj;
+};
 
-console.log(flatObject(input))
+console.log(flatObject(input));
 
+// prototype for map
+Array.prototype.myMap = function (callback) {
+  let newArr = [];
+  let arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    const counter = callback(this[i]);
+    newArr.push(counter);
+  }
+  return newArr;
+};
+
+let arr2 = [1, 2, 3, 4];
+
+const myMapArr = arr2.myMap((e) => e * 2);
+
+console.log(myMapArr);
+
+// prototype for map
+Array.prototype.myForEach = function (callback) {
+  let arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    callback(this[i]);
+  }
+};
+
+// arr2 = arr2.myForEach((e) => e * 2);
+// console.log(arr2);
+
+Array.prototype.myFilter = function (callback) {
+  if (typeof callback != "function") {
+    throw new Error("callback not a func");
+  }
+  let filteredArr = [];
+
+  for (let i = 0; i < this.length; i++) {
+    if (Object.prototype.hasOwnProperty.call(this, i)) {
+      if (callback(this[i], i, this)) {
+        filteredArr.push(this[i]);
+      }
+    }
+  }
+  return filteredArr;
+};
+const numbers = [1, 2, 3, 4, 5, 6];
+
+const evenNumbers = numbers.myFilter(function (num) {
+  return num % 2 === 0;
+});
+
+console.log(evenNumbers);
