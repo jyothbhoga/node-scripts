@@ -227,13 +227,11 @@ const flatObject = (obj) => {
 
 console.log(flatObject(input));
 
-// prototype for map
+// Instinct Innovation Interview prototype for map
 Array.prototype.myMap = function (callback) {
   let newArr = [];
-  let arrLength = this.length;
-  for (let i = 0; i < arrLength; i++) {
-    const counter = callback(this[i]);
-    newArr.push(counter);
+  for (let i = 0; i < this.length; i++) {
+    newArr.push(callback(this[i]));
   }
   return newArr;
 };
@@ -242,19 +240,23 @@ let arr2 = [1, 2, 3, 4];
 
 const myMapArr = arr2.myMap((e) => e * 2);
 
-console.log(myMapArr);
+console.log("Map Prototype", myMapArr);
 
-// prototype for map
+// prototype for foreach
 Array.prototype.myForEach = function (callback) {
-  let arrLength = this.length;
-  for (let i = 0; i < arrLength; i++) {
+  for (let i = 0; i < this.length; i++) {
     callback(this[i]);
   }
 };
 
-// arr2 = arr2.myForEach((e) => e * 2);
-// console.log(arr2);
+const resultOfForEach = arr2.myForEach((num) => {
+  num * 2;
+  return num;
+});
 
+console.log("Result of myForEach call:", resultOfForEach);
+
+//Protoype for filter
 Array.prototype.myFilter = function (callback) {
   if (typeof callback != "function") {
     throw new Error("callback not a func");
@@ -277,3 +279,138 @@ const evenNumbers = numbers.myFilter(function (num) {
 });
 
 console.log(evenNumbers);
+
+//Call apply bind based quests
+
+let objCall = { name: "Jyoth", add: "Mumb" };
+
+function sayHello(age, profession) {
+  return (
+    "Hello " +
+    this.name +
+    " My age is " +
+    age +
+    " my add is " +
+    this.add +
+    " my profession is " +
+    profession
+  );
+}
+
+//Call method
+console.log(sayHello.call(objCall, 21, "Engineer"));
+
+//Apply method
+console.log(sayHello.apply(objCall, [25, "Teacher"]));
+
+//Bind method
+const bindFunc = sayHello.bind(objCall);
+console.log(bindFunc(31, "Devloper"));
+
+const age = 10;
+let person = {
+  name: "Jyoth",
+  age: 20,
+  getAge: function () {
+    return this.age;
+  },
+};
+
+var person2 = { age: 24 };
+
+//Call method
+console.log(person.getAge.call(person2));
+
+//Apply method
+console.log(person.getAge.apply(person2));
+
+//Bind method
+const bindPerson = person.getAge.bind(person2);
+console.log(bindPerson());
+
+// Call printAnimals such that it prints all animals in the object
+const animals = [
+  { species: "Whale", name: "Queen" },
+  { species: "Lion", name: "King" },
+];
+
+function printAnimals(i, type) {
+  this.print = function () {
+    console.log("#" + i + " " + this.species + ": " + this.name + " " + type);
+  };
+  this.print();
+}
+
+for (let i = 0; i < animals.length; i++) {
+  printAnimals.call(animals[i], i, "call");
+  printAnimals.apply(animals[i], [i, "apply"]);
+  const bindFunc = printAnimals.bind(animals[i]);
+  bindFunc(i, "bind");
+}
+
+//Append an array to another array
+let ar1 = [1, 2, 3];
+let ar2 = ["a", "b", "c"];
+
+ar1.push.apply(ar1, ar2);
+
+console.log(ar1);
+
+//Find min max
+const arrNum = [3, 5, 21, 53, 2, 214, 123];
+console.log(Math.max.apply(null, arrNum));
+console.log(Math.min.apply(null, arrNum));
+
+function sayPolyfillHello(age, profession) {
+  console.log(
+    "Hello " +
+      this.name +
+      " My age is " +
+      age +
+      " my add is " +
+      this.add +
+      " my profession is " +
+      profession
+  );
+}
+//Polyfill for call
+Function.prototype.myCall = function (context, ...args) {
+  if (typeof this !== "function") {
+    throw new Error("Its non callable");
+  }
+  context.fn = this;
+  context.fn(...args);
+};
+
+sayPolyfillHello.myCall(objCall, 21, "polyfill call");
+
+//Polyfill for apply
+Function.prototype.myApply = function (context, args) {
+  if (typeof this !== "function") {
+    throw new Error("Its non callable");
+  }
+  if (!Array.isArray(args)) {
+    throw new Error("Arguments are not in array format");
+  }
+  context.fn = this;
+  context.fn(...args);
+};
+
+sayPolyfillHello.myApply(objCall, [21, "polyfill apply"]);
+
+//Polyfill for bind
+Function.prototype.myBind = function (context, ...args) {
+  if (typeof this !== "function") {
+    throw new Error("Function is not boundable");
+  }
+  context.fn = this;
+  return function (...newArgs) {
+    context.fn(...args, ...newArgs);
+  };
+};
+
+const polyFillBind = sayPolyfillHello.bind(objCall);
+
+console.log(polyFillBind(31, "polyfill bind"));
+
+
