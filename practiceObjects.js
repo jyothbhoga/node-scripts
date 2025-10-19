@@ -412,5 +412,3 @@ Function.prototype.myBind = function (context, ...args) {
 const polyFillBind = sayPolyfillHello.bind(objCall);
 
 console.log(polyFillBind(31, "polyfill bind"));
-
-
