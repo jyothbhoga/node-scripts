@@ -24,7 +24,7 @@ const empProxy = new Proxy(employee, {
 });
 
 console.log(empProxy.aadharNo);
-console.log(empProxy.mobileNo);
+// console.log(empProxy.mobileNo);
 
 // https://www.instagram.com/p/DND6fCiScBA/
 
