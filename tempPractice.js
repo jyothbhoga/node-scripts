@@ -16,7 +16,7 @@ console.log("Map Prototype", myMapArr);
 
 Array.prototype.myFilter = function (callback) {
   if (typeof callback !== "function") {
-    throw new Error("Filter cannot be implemented");
+    throw new Error("Filter cannot be implemented. Sorry");
   }
   let returnArr = [];
   for (let i = 0; i < this.length; i++) {
