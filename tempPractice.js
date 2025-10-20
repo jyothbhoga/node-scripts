@@ -1,6 +1,6 @@
 //22-08-2025
 
-Array.prototype.myMap = function (callback) {
+Array.prototype.*myMap = function (callback) {
   let returnArr = [];
   for (let i = 0; i < this.length; i++) {
     returnArr.push(callback(this[i]));
@@ -66,3 +66,21 @@ Array.prototype.myMap = function (call) {
   }
   return retArr;
 };
+
+// [
+//   { userId: 1, userName: 'Alice', postTitles: ['Post 1'] },
+//   { userId: 2, userName: 'Bob', postTitles: ['Post 2'] },
+// ]
+
+// const data = [
+//   { id: 1, user: { name: "Alice" }, posts: [{ id: 11, title: "Post 1" }] },
+//   { id: 2, user: { name: "Bob" }, posts: [{ id: 22, title: "Post 2" }] },
+// ];
+// // Your code here!
+// const updatedData = data.map((user) => ({
+//   id: user.id,
+//   userName: user.user.name,
+//   postTitles: user.posts.map((post) => post.title),
+// }));
+
+// console.log(updatedData);
