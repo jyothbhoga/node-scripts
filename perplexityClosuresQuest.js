@@ -98,4 +98,62 @@ const calc = createCalculator(10);
 const result = calc.add(5).subtract(3).multiply(2).getResult();
 console.log(result); // 24
 
+//======================================================================//
 
+function multiply(a, b, c) {
+  return a * b * c;
+}
+
+const multiplyBy2 = partial(multiply, 2);
+console.log(multiplyBy2(3, 4)); // 24 (2 * 3 * 4)
+
+const multiplyBy2And3 = partial(multiply, 2, 3);
+console.log(multiplyBy2And3(4)); // 24 (2 * 3 * 4)
+
+//======================================================================//
+
+const history = createHistory();
+
+history.set(10);
+history.set(20);
+history.set(30);
+
+console.log(history.getCurrent()); // 30
+history.undo();
+console.log(history.getCurrent()); // 20
+history.undo();
+console.log(history.getCurrent()); // 10
+history.redo();
+console.log(history.getCurrent()); // 20
+
+//======================================================================//
+
+const colors = createCycle(['red', 'green', 'blue']);
+
+console.log(colors.next()); // 'red'
+console.log(colors.next()); // 'green'
+console.log(colors.next()); // 'blue'
+console.log(colors.next()); // 'red' (cycles back)
+console.log(colors.next()); // 'green'
+
+colors.reset();
+console.log(colors.next()); // 'red'
+
+//======================================================================//
+
+const counter2 = createAdvancedCounter(10);
+
+counter2.increment();
+console.log(counter2.getValue()); // 11
+
+counter2.decrement();
+console.log(counter2.getValue()); // 10
+
+counter2.incrementBy(5);
+console.log(counter2.getValue()); // 15
+
+counter2.multiplyBy(2);
+console.log(counter2.getValue()); // 30
+
+// Cannot access internal value directly
+console.log(counter2.value); // undefined
