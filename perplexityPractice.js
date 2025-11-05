@@ -332,3 +332,288 @@
 
 // // Cannot access internal value directly
 // console.log(counter2.value); // undefined
+
+// 29 Oct 2025
+
+// const once = (fn) => {
+//   let sum = 0;
+//   let isCalled = false;
+//   return (a, b) => {
+//     if (!isCalled) {
+//       isCalled = true;
+//       sum = fn(a, b);
+//     }
+//     return sum;
+//   };
+// };
+// function add(a, b) {
+//   return a + b;
+// }
+
+// const addOnce = once(add);
+
+// console.log(addOnce(2, 3)); // 5
+// console.log(addOnce(5, 5));
+
+// const memoize = (fn) => {
+//   const memoizedObj = {};
+
+//   return (n) => {
+//     if(!memoizedObj[n]) {
+//       memoizedObj[n] = fn(n)
+//     }
+//     return memoizedObj[n];
+//   };
+// };
+
+// function slowSquare(n) {
+//   console.log("Computing...");
+//   return n * n;
+// }
+
+// const memoSquare = memoize(slowSquare);
+
+// console.log(memoSquare(4)); // Computing... 16
+// console.log(memoSquare(4)); // 16 (cached, no log)
+// console.log(memoSquare(5)); // Computing... 25
+
+// const partial = (fn, ...args) => {
+//   let abc = 0;
+//   return (...newArgs) => {
+//     abc = fn(...args, ...newArgs);
+//     return abc;
+//   };
+// };
+
+// function multiply(a, b, c) {
+//   return a * b * c;
+// }
+
+// const multiplyBy2 = partial(multiply, 2);
+// console.log(multiplyBy2(3, 4)); // 24 (2 * 3 * 4)
+
+// const multiplyBy2And3 = partial(multiply, 2, 3);
+// console.log(multiplyBy2And3(4)); // 24 (2 * 3 * 4)
+
+// const createCycle = (arr) => {
+//   let currInd = 0;
+//   const colorsOperation = {
+//     next: () => {
+//       if(currInd === arr.length) {
+//         currInd = 0;
+//       }
+//       return arr[currInd++];
+//     },
+//     reset: () => {
+//       currInd = 0;
+//     },
+//   };
+//   return colorsOperation;
+// };
+
+// const colors = createCycle(["red", "green", "blue"]);
+
+// console.log(colors.next()); // 'red'
+// console.log(colors.next()); // 'green'
+// console.log(colors.next()); // 'blue'
+// console.log(colors.next()); // 'red' (cycles back)
+// console.log(colors.next()); // 'green'
+
+// colors.reset();
+// console.log(colors.next()); // 'red'
+
+// there is 3 states
+// 1 is wishlist
+// 1 is cart
+// 1 is reset
+
+// const shoppingCart = (x) => {
+//       let c = x;
+//   const retFunc = {
+//     wishlist: () => {
+//       c = x + 1;
+//       return c;
+//     },
+//     cart: () => {
+//       c = x + 1;
+//       return c;
+//     },
+//     reset: () => {
+//       c = 0;
+//       return c;
+//     },
+//   };
+//   return retFunc;
+// };
+
+// const callShoppingCart = shoppingCart(0);
+// console.log(callShoppingCart.wishlist());
+// console.log(callShoppingCart.wishlist());
+// console.log(callShoppingCart.cart());
+// console.log(callShoppingCart.cart());
+// callShoppingCart.reset();
+// console.log(callShoppingCart.wishlist());
+// console.log(callShoppingCart.cart());
+
+// 1/11/2025
+
+// const createCounter = (x) => {
+//   let n = x;
+//   return () => {
+//     n = n + 1;
+//     return n;
+//   };
+// };
+// const counter1 = createCounter(0);
+
+// console.log(counter1()); // 1
+// console.log(counter1()); // 2
+// console.log(counter1()); // 3
+// console.log(counter1()); // 4
+
+// const createBankAccount = (bal) => {
+//   let updatedBal = bal;
+
+//   const deposit = (x) => {
+//     updatedBal = updatedBal + x;
+//   };
+//   const withdraw = (x) => {
+//     updatedBal = updatedBal - x;
+//   };
+//   const getBalance = () => {
+//     return updatedBal;
+//   };
+//   return { deposit, withdraw, getBalance };
+// };
+
+// const account = createBankAccount(100);
+
+// account.deposit(50);
+// console.log(account.getBalance()); // 150
+
+// account.withdraw(30);
+// console.log(account.getBalance()); // 120
+
+// const createGreeter = (str) => {
+//   return (newStr) => {
+//     return str + newStr
+//   }
+// }
+
+// const sayHello = createGreeter('Hello');
+// const sayHi = createGreeter('Hi');
+
+// console.log(sayHello('Alice')); // 'Hello, Alice!'
+// console.log(sayHi('Bob'));      // 'Hi, Bob!'
+
+// const once = (fn) => {
+//   let sum = 0;
+//   let isCalled = false;
+//   return (a, b) => {
+//     if (!isCalled) {
+//       isCalled = true;
+//       sum = fn(a, b);
+//     }
+//     return sum;
+//   };
+// };
+
+// function add(a, b) {
+//   return a + b;
+// }
+
+// const addOnce = once(add);
+
+// console.log(addOnce(2, 3)); // 5
+// console.log(addOnce(5, 5)); // 5 (still returns first result)
+
+// const createCounter = (x) => {
+//   let ret = x;
+//   let updatedVal = x;
+//   let retCounter = () => {
+//     updatedVal = updatedVal + 1;
+//     return updatedVal;
+//   };
+//   retCounter.reset = () => {
+//     return (updatedVal = ret);
+//   };
+//   return retCounter;
+// };
+
+// const counter = createCounter(5);
+
+// console.log(counter()); // 6
+// console.log(counter()); // 7
+// counter.reset();
+// console.log(counter()); // 6
+
+// const memoize = (fn) => {
+//   let abc = {};
+
+//   return (x) => {
+//     if (!abc[x]) {
+//       abc[x] = fn(x);
+//     }
+//     return abc[x];
+//   };
+// };
+
+// function slowSquare(n) {
+//   console.log("Computing...");
+//   return n * n;
+// }
+
+// const memoSquare = memoize(slowSquare);
+
+// console.log(memoSquare(4)); // Computing... 16
+// console.log(memoSquare(4)); // 16 (cached, no log)
+// console.log(memoSquare(5)); // Computing... 25
+
+// const createCalculator = (x) => {
+//   let updatedVal = x;
+//   const retCalc = {
+//     add: function (a) {
+//       updatedVal = updatedVal + a;
+//       return this;
+//     },
+//     subtract: function (a) {
+//       updatedVal = updatedVal - a;
+//       return this;
+//     },
+//     multiply: function (a) {
+//       updatedVal = updatedVal * a;
+//       return this;
+//     },
+//     getResult: () => {
+//       return updatedVal;
+//     },
+//   };
+//   return retCalc;
+// };
+
+// const calc = createCalculator(10);
+
+// const result = calc.add(5).subtract(3).multiply(2).getResult();
+// console.log(result); // 24
+
+// function debouncing(func, delay) {
+//   let timerId;
+//   return (...args) => {
+//     clearTimeout(timerId);
+//     timerId = setTimeout(() => {
+//       func(...args);
+//     }, delay);
+//   };
+// }
+
+// 5 Nov 2025
+
+function debouncing(func, delay) {
+  let timerId;
+  return (...args) => {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+}

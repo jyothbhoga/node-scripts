@@ -157,3 +157,5 @@ console.log(counter2.getValue()); // 30
 
 // Cannot access internal value directly
 console.log(counter2.value); // undefined
+
+

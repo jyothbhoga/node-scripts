@@ -412,3 +412,22 @@ Function.prototype.myBind = function (context, ...args) {
 const polyFillBind = sayPolyfillHello.bind(objCall);
 
 console.log(polyFillBind(31, "polyfill bind"));
+
+const abc = {
+  testFunc: function () {
+    return this;
+  },
+};
+
+const def = {
+  testFunc: () => {
+    return this;
+  },
+};
+
+const xyz = abc.testFunc();
+
+const pqr = def.testFunc();
+console.log(xyz);
+console.log(pqr);
+
