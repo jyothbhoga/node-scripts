@@ -608,12 +608,434 @@
 
 // 5 Nov 2025
 
-function debouncing(func, delay) {
-  let timerId;
-  return (...args) => {
-    clearTimeout(timerId);
-    timerId = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
-}
+// function debouncing(func, delay) {
+//   let timerId;
+//   return (...args) => {
+//     clearTimeout(timerId);
+//     timerId = setTimeout(() => {
+//       func(...args);
+//     }, delay);
+//   };
+// }
+
+// const retry = async (func, retries = 3, delay = 500) => {
+//   try {
+//     return await func();
+//   } catch (err) {
+//     if (retries <= 0) {
+//       throw new err();
+//     } else {
+//       await new Promise((r) => setTimeout(r, delay));
+//       return await retry(func, retries - 1, delay * retries);
+//     }
+//   }
+// };
+
+// const arr1 = [1, 5, 6, 32, 2, 5, 33, 78, 200, 56];
+
+// const findlargestNumber = (arr) => {
+//   let tempArr = [];
+//   if (arr.length === 1) {
+//     return arr[0];
+//   }
+//   for (let i = 0; i < arr.length; i++) {
+//     if (i === 0) {
+//       if (arr[i] > arr[i + 1]) {
+//         tempArr = [...tempArr, arr[i]];
+//       }
+//     }
+//     if (i === arr.length - 1) {
+//       if (arr[i] > arr[i - 1]) {
+//         tempArr = [...tempArr, arr[i]];
+//       }
+//     }
+//     if (arr[i] > arr[i - 1] && arr[i] > arr[i + 1]) {
+//       tempArr = [...tempArr, arr[i]];
+//     }
+//   }
+//   if (arr.length > 1) {
+//     return findlargestNumber(tempArr);
+//   }
+// };
+
+// console.log(findlargestNumber(arr1));
+
+// // 22 Nov 2025
+// const retry = async (func, retries = 3, delay = 500) => {
+//   try {
+//     return await func();
+//   } catch {
+//     if (retries <= 0) {
+//       throw new Error("all retries failed");
+//     }
+//     await new Promise((r) => setTimeout(() => r, delay));
+//     return await retry(func, retries - 1, delay * 2);
+//   }
+// };
+
+// const debouncing = (func, delay) => {
+//   let timerId;
+//   return function (...args) {
+//     const context = this;
+//     clearTimeout(timerId);
+//     timerId = setTimeout(() => {
+//       func.apply(context, ...args);
+//     }, delay);
+//   };
+// };
+
+// const clone = structuredClone(abc);
+
+// const createCounter = (n) => {
+//   let x = n;
+//   return () => {
+//     return (x = x + 1);
+//   };
+// };
+
+// const counter1 = createCounter(0);
+
+// console.log(counter1()); // 1
+// console.log(counter1()); // 2
+// console.log(counter1()); // 3
+// console.log(counter1()); // 4
+
+// const createMultiplier = (a) => {
+//   return (b) => {
+//     return a * b;
+//   };
+// };
+
+// const double = createMultiplier(2);
+// const triple = createMultiplier(3);
+
+// console.log(double(5)); // 10
+// console.log(triple(5)); // 15
+// console.log(double(10)); // 20
+
+// const createBankAccount = (a) => {
+//   let bal = a;
+//   const account = {
+//     deposit: (b) => {
+//       return (bal = bal + b);
+//     },
+//     withdraw: (b) => {
+//       return (bal = bal - b);
+//     },
+//     getBalance: () => {
+//       return bal;
+//     },
+//   };
+//   return account;
+// };
+
+// const account = createBankAccount(100);
+
+// account.deposit(50);
+// console.log(account.getBalance()); // 150
+
+// account.withdraw(30);
+// console.log(account.getBalance()); // 120
+
+// const once = (fn) => {
+//   let isAdded = false;
+//   let val = 0;
+//   return (a, b) => {
+//     if (!isAdded) {
+//       isAdded = true;
+//       val = fn(a, b);
+//     }
+//     return val;
+//   };
+// };
+
+// function add(a, b) {
+//   return a + b;
+// }
+
+// const addOnce = once(add);
+
+// console.log(addOnce(2, 3)); // 5
+// console.log(addOnce(5, 5)); // 5 (still returns first result)
+
+// const createCounter = (n) => {
+//   let count = n;
+//   let initialVal = n;
+//   const retCounter = () => {
+//     return count = count + 1;
+//   }
+
+//   retCounter.reset = () => {
+//     return count = initialVal;
+//   }
+
+//   return retCounter;
+//  }
+// const counter = createCounter(5);
+
+// console.log(counter()); // 6
+// console.log(counter()); // 7
+// counter.reset();
+// console.log(counter()); // 6
+
+// const memoize = (fn) => {
+//   let memoizedObj = {};
+
+//   return (n) => {
+//     if(!memoizedObj[n]) {
+//       memoizedObj[n] = fn(n);
+//     }
+//     return memoizedObj[n];
+//   }
+// }
+
+// function slowSquare(n) {
+//   console.log('Computing...');
+//   return n * n;
+// }
+
+// const memoSquare = memoize(slowSquare);
+
+// console.log(memoSquare(4)); // Computing... 16
+// console.log(memoSquare(4)); // 16 (cached, no log)
+// console.log(memoSquare(5)); // Computing... 25
+
+// const createRateLimiter = (n) => {
+//   let x = 0;
+//   let initialVal = n;
+//   return (str) => {
+//     if (x < initialVal) {
+//       x = x + 1;
+//       return str;
+//     } else {
+//       return null;
+//     }
+//   };
+// };
+
+// const limiter = createRateLimiter(3);
+
+// console.log(limiter("call 1")); // 'call 1'
+// console.log(limiter("call 2")); // 'call 2'
+// console.log(limiter("call 3")); // 'call 3'
+// console.log(limiter("call 4")); // null
+
+// const createCalculator = (x) => {
+//   let retVal = x;
+
+//   const calc = {
+//     add: function (x) {
+//       retVal = retVal + x;
+//       return this;
+//     },
+//     subtract: function (x) {
+//       retVal = retVal - x;
+//       return this;
+//     },
+//     multiply: function (x) {
+//       retVal = retVal * x;
+//       return this;
+//     },
+//     getResult: function () {
+//       return retVal;
+//     },
+//   };
+//   return calc;
+// };
+
+// const calc = createCalculator(10);
+
+// const result = calc.add(5).subtract(3).multiply(2).getResult();
+// console.log(result); // 24
+
+// const partial = (fn, ...args) => {
+//   return (...newArgs) => {
+//     return fn(...args, ...newArgs);
+//   }
+// }
+
+// function multiply(a, b, c) {
+//   return a * b * c;
+// }
+
+// const multiplyBy2 = partial(multiply, 2);
+// console.log(multiplyBy2(3, 4)); // 24 (2 * 3 * 4)
+
+// const multiplyBy2And3 = partial(multiply, 2, 3);
+// console.log(multiplyBy2And3(4)); // 24 (2 * 3 * 4)
+
+// const createHistory = () => {
+//   let history = [];
+//   let redoHist = [];
+//   let historyCount = 0;
+//   let redoCount = 0;
+//   const retHistory = {
+//     set: (n) => {
+//       history[historyCount] = n;
+//       historyCount = historyCount + 1;
+//     },
+//     undo: () => {
+//       redoHist[redoCount] = history[historyCount - 1];
+//       historyCount = historyCount - 1;
+//       history.pop();
+//       redoCount = redoCount + 1;
+//     },
+//     redo: () => {
+//       historyCount = historyCount + 1;
+//       history[historyCount - 1] = redoHist[redoCount - 1];
+//       redoHist.pop();
+//       redoCount = redoCount - 1;
+//     },
+//     getCurrent: () => {
+//       return history[historyCount - 1];
+//     },
+//   };
+//   return retHistory;
+// };
+
+// const createHistory = () => {
+//   let history = [];
+//   let count = 0;
+//   let deletedArr = [];
+
+//   const retHistory = {
+//     set: (x) => {
+//       history[count] = x;
+//       count += 1;
+//     },
+//     undo: () => {
+//       deletedArr.push(history[history.length - 1]);
+//       count -= 1;
+//       history.pop();
+//     },
+//     redo: () => {
+//       history.push(deletedArr[deletedArr.length - 1]);
+//       deletedArr.pop();
+//     },
+//     getCurrent: () => {
+//       return history[history.length - 1];
+//     }
+//   };
+
+//   return retHistory;
+// };
+
+// const history = createHistory();
+
+// history.set(10);
+// history.set(20);
+// history.set(30);
+
+// console.log(history.getCurrent()); // 30
+// history.undo();
+// console.log(history.getCurrent()); // 20
+// history.undo();
+// console.log(history.getCurrent()); // 10
+// history.redo();
+// console.log(history.getCurrent()); // 20
+
+// const createCycle = (arr) => {
+//   let count = 0;
+//   let arrLength = arr.length;
+//   const retCycle = {
+//     next: () => {
+//       if (count >= arrLength) {
+//         count = 0;
+//       }
+//       return arr[count++];
+//     },
+//     reset: () => {
+//       count = 0;
+//     }
+//   };
+//   return retCycle;
+// };
+
+// const colors = createCycle(["red", "green", "blue"]);
+
+// console.log(colors.next()); // 'red'
+// console.log(colors.next()); // 'green'
+// console.log(colors.next()); // 'blue'
+// console.log(colors.next()); // 'red' (cycles back)
+// console.log(colors.next()); // 'green'
+
+// colors.reset();
+// console.log(colors.next()); // 'red'
+
+// const createAdvancedCounter = (x) => {
+//   let retVal = x;
+
+//   const retCounter = {
+//     increment: () => {
+//       retVal = retVal + 1;
+//     },
+//     decrement: () => {
+//       retVal = retVal - 1;
+//     },
+//     incrementBy: (n) => {
+//       retVal = retVal + n;
+//     },
+//     multiplyBy: (n) => {
+//       retVal = retVal * n;
+//     },
+//     getValue: () => {
+//       return retVal;
+//     },
+//   };
+//   return retCounter;
+// };
+
+// const counter2 = createAdvancedCounter(10);
+
+// counter2.increment();
+// console.log(counter2.getValue()); // 11
+
+// counter2.decrement();
+// console.log(counter2.getValue()); // 10
+
+// counter2.incrementBy(5);
+// console.log(counter2.getValue()); // 15
+
+// counter2.multiplyBy(2);
+// console.log(counter2.getValue()); // 30
+
+// // Cannot access internal value directly
+// console.log(counter2.value); // undefined
+
+//retry logic
+
+// const retry = async (fn, retries = 3, delay = 500) => {
+//   try {
+//     return await fn();
+//   } catch (err) {
+//     if (retries <= 0) {
+//       throw new Error("All retries failed");
+//     }
+//     await new Promise((r) => setTimeout(r, delay));
+//     return await retry(fn, retries - 1, delay * retries);
+//   }
+// };
+
+// function isBalanced(str) {
+//   let firstOcc = true;
+
+//   let openBracketLength = 0;
+//   let closeBracketLength = 0;
+
+//   for (let i = 0; i < str.length; i++) {
+//     if (str[i] === "(" || str[i] === "{") {
+//       openBracketLength += 1;
+//     } else {
+//       closeBracketLength += 1;
+//       if (openBracketLength < closeBracketLength) {
+//         firstOcc = false;
+//       }
+//     }
+//   }
+
+//   if (openBracketLength === closeBracketLength && firstOcc) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
